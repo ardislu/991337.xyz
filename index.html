@@ -34,10 +34,27 @@
     <label for="auto-rotate">Auto Rotate</label>
   </div>
 
+  <script async src="https://unpkg.com/es-module-shims@1.5.9/dist/es-module-shims.js"></script>
+
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://unpkg.com/three@0.142.0/build/three.module.js",
+      "OrbitControls": "https://unpkg.com/three@0.142.0/examples/jsm/controls/OrbitControls.js",
+      "FontLoader": "https://unpkg.com/three@0.142.0/examples/jsm/loaders/FontLoader.js",
+      "TextGeometry": "https://unpkg.com/three@0.142.0/examples/jsm/geometries/TextGeometry.js"
+    }
+  }
+  </script>
+
   <script type="module">
-    // Importing from CDN is broken after v0.127.0
-    import * as THREE from 'https://unpkg.com/three@0.127.0/build/three.module.js';
-    import { OrbitControls } from 'https://unpkg.com/three@0.127.0/examples/jsm/controls/OrbitControls.js';
+    // Importing three.js from direct CDN URL is broken after v0.127.0. Instead, importmap is required.
+    // importmap is not supported on Firefox or Safari (July 2022). So es-module-shims polyfill is required
+    // to support these browsers.
+    import * as THREE from 'three';
+    import { OrbitControls } from 'OrbitControls';
+    import { FontLoader } from 'FontLoader';
+    import { TextGeometry } from 'TextGeometry';
 
     // Set up globals
     const canvas = document.querySelector('canvas');
@@ -69,7 +86,7 @@
 
     // Randomized values
     const backgrounds = [0xf7d4d4, 0xf7ebd4, 0xebf7d4, 0xd4f7d4, 0xd4f7eb, 0xd4ebf7, 0xd4d4f7, 0xebd4f7, 0xf7d4eb];
-    const fonts = await Promise.all(['Avara', 'Datalegreya', 'Glacial_Indifference', 'Hussar_Szturm', 'Nemoy', 'Sansita', 'Woodwarrior'].map(f => new THREE.FontLoader().loadAsync(`./fonts/${f}.json`)));
+    const fonts = await Promise.all(['Avara', 'Datalegreya', 'Glacial_Indifference', 'Hussar_Szturm', 'Nemoy', 'Sansita', 'Woodwarrior'].map(f => new FontLoader().loadAsync(`./fonts/${f}.json`)));
     const materials = [0xe60000, 0xe69900, 0x99e600, 0x00e600, 0x00e699, 0x0099e6, 0x0000e6, 0x9900e6, 0xe60099].map(c => new THREE.MeshPhongMaterial({ color: c }));
 
     let seed = new Uint8Array(21); // 1 background + font and material for 10 characters
@@ -78,7 +95,7 @@
 
     scene.background = new THREE.Color(backgrounds[seed.pop() % backgrounds.length]);
     for (const c of ['9', '9', '1', '3', '3', '7', '.', 'x', 'y', 'z']) {
-      const geometry = new THREE.TextGeometry(c, { font: fonts[seed.pop() % fonts.length] });
+      const geometry = new TextGeometry(c, { font: fonts[seed.pop() % fonts.length] });
       const material = materials[seed.pop() % materials.length];
       const mesh = new THREE.Mesh(geometry, material);
       mesh.geometry.computeBoundingBox(); // Only needs to be called once. Required for placeCharacters()
