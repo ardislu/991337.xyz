@@ -53,8 +53,8 @@
 
   <script type="module">
     // Importing three.js from direct CDN URL is broken after v0.127.0. Instead, importmap is required.
-    // importmap is not supported on Firefox or Safari (July 2022). So es-module-shims polyfill is required
-    // to support these browsers.
+    // importmap is not supported on Safari (December 2022). So es-module-shims polyfill is required
+    // to support Safari.
     import * as THREE from 'three';
     import { OrbitControls } from 'OrbitControls';
     import { FontLoader } from 'FontLoader';
