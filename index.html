@@ -38,22 +38,22 @@
     <label for="auto-rotate">Auto Rotate</label>
   </div>
 
-  <script async src="https://cdn.jsdelivr.net/npm/es-module-shims@1.6.2/dist/es-module-shims.min.js"></script>
+  <script async src="https://cdn.jsdelivr.net/npm/es-module-shims@1.6.3/dist/es-module-shims.min.js"></script>
 
   <script type="importmap">
   {
     "imports": {
-      "three": "https://cdn.jsdelivr.net/npm/three@0.147.0/build/three.module.min.js",
-      "OrbitControls": "https://cdn.jsdelivr.net/npm/three@0.147.0/examples/jsm/controls/OrbitControls.min.js",
-      "FontLoader": "https://cdn.jsdelivr.net/npm/three@0.147.0/examples/jsm/loaders/FontLoader.min.js",
-      "TextGeometry": "https://cdn.jsdelivr.net/npm/three@0.147.0/examples/jsm/geometries/TextGeometry.min.js"
+      "three": "https://cdn.jsdelivr.net/npm/three@0.148.0/build/three.module.min.js",
+      "OrbitControls": "https://cdn.jsdelivr.net/npm/three@0.148.0/examples/jsm/controls/OrbitControls.min.js",
+      "FontLoader": "https://cdn.jsdelivr.net/npm/three@0.148.0/examples/jsm/loaders/FontLoader.min.js",
+      "TextGeometry": "https://cdn.jsdelivr.net/npm/three@0.148.0/examples/jsm/geometries/TextGeometry.min.js"
     }
   }
   </script>
 
   <script type="module">
     // Importing three.js from direct CDN URL is broken after v0.127.0. Instead, importmap is required.
-    // importmap is not supported on Safari (December 2022). So es-module-shims polyfill is required
+    // importmap is not supported on Safari (January 2023). So es-module-shims polyfill is required
     // to support Safari.
     import * as THREE from 'three';
     import { OrbitControls } from 'OrbitControls';
